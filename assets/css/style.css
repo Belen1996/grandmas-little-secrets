@@ -1,3 +1,17 @@
+
+
+
+body {
+    padding-right: 25px;
+    padding-left: 25px;
+    margin-left: 25px;
+    margin-right: 25px;
+    background-image:  url("../images/bg3.jpeg");                    
+    background-repeat:   no-repeat;
+    background-size:cover
+    
+}
+
 #logopic {
     margin-left: auto;
     margin-right: auto;
@@ -5,29 +19,101 @@
     height:150px;
     width:165px;
     display: block;
+    border-radius: 8px;
 }
 
 #logotitle {
     text-align: center;
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Rouge Script', cursive;
+    font-size: 60px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+ 
 }
 
 #accountform {
     width: 600px;
     margin-left: auto;
     margin-right: auto;
-    border: solid 1.5px;
     padding: 7px;
+    background-color: rgb(56, 56, 77);
+    opacity: 0.9;
+    border-radius: 10px;
+    color: white;
+    font-family: 'Dancing Script', cursive;
+    font-size: 22px;
 }
 
 #submit {
     margin-left: auto;
     margin-right: auto;
     display: block;
+    background-color: rgb(73, 10, 10);
 }
 
-#home-page-buttons {
-    margin-left: auto;
-    margin-right: auto;
+.home-page-btns {
+    text-align: center;
     display: block;
+    width: 100%;
+}
+
+#home-page-btn {
+    float: right;
+}
+
+#sign-up-btn {
+    background-color: rgb(112, 20, 20);
+    color: white;
+    font-size: 35px;
+    width: 150px;
+    height: 100px;
+    border-radius: 12px;
+    font-family: 'Dancing Script', cursive;
+}
+
+#login-btn {
+    background-color: rgb(112, 20, 20);
+    color: white;
+    font-size: 40px;
+    width: 150px;
+    height: 100px;
+    border-radius: 12px;
+    font-family: 'Dancing Script', cursive;
+}
+
+#home-page-btn {
+    background-color: rgb(112, 20, 20);
+    color: white;
+    font-size: 22px;
+    width: 80px;
+    height: 50px;
+    border-radius: 12px;
+    font-family: 'Dancing Script', cursive;
+    font-weight: bold;
+}
+
+#create-account-title {
+    color: white;
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+    text-shadow: 2px 2px 4px #000000;
+    font-weight: bold;
+    font-size: 35px;
+}
+
+#validation-errors {
+    color: red;
+    text-shadow: 2px 2px 4px #000000;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#information {
+    color: greenyellow
+}
+
+#font {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: black;
 }
