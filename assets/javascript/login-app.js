@@ -58,19 +58,7 @@ function validateEmailAddress(email) {
     }
 }
 
-function validateName(field, name) {
-    if(name != null) {
-        if(/^[A-Za-z\s-]+$/.test(name)) {
-            return [];
-        } else {
-            return [field + " is not valid. Only alphabetic letters and spaces are allowed"];
-        }
-    } else {
-        return [ field + " is required"];
-    }
-}
-
-function validatePassword(password, confirmPassword) {
+function validatePassword(password) {
     if(password != null) {
         let passwordValidation = [];
 
@@ -86,42 +74,36 @@ function validatePassword(password, confirmPassword) {
         if(!(/[A-Z]/).test(password)) {
             passwordValidation.push("Password must contain at least one upper case letter");
         }
-        if(password !== confirmPassword) {
-            passwordValidation.push("Password confirmation must match the given password");
-        }
-
         return passwordValidation;
     } else {
         return ["Password is required"];
     }
 }
 
-function validateAccountFormInput(email, firstName, lastName, password, confirmPassword) {
+function validateAccountFormInput(email, password) {
     let isEmailValid = validateEmailAddress(email);
-    let isFirstNameValid = validateName("First name", firstName);
-    let isLastNameValid = validateName("Last name", lastName);
-    let isPasswordValid = validatePassword(password, confirmPassword);
+    let isPasswordValid = validatePassword(password);
 
-    return isEmailValid.concat(isFirstNameValid).concat(isLastNameValid).concat(isPasswordValid);
+    return isEmailValid.concat(isPasswordValid);
 }
 
-function createAccount() {
+function login() {
     let emailField = $("#exampleInputEmail1").val();
-    let firstNameField = $("#yourname").val();
-    let lastNameField = $("#lastname").val();
     let passwordField = $("#exampleInputPassword1").val();
-    let confirmPasswordField = $("#confirm-password").val();
 
-    let validationErrors = validateAccountFormInput(emailField, firstNameField, lastNameField, passwordField, confirmPasswordField);
+    let validationErrors = validateAccountFormInput(emailField, passwordField);
 
     if(!isArrayEmpty(validationErrors)) {
         displayValidationErrors(validationErrors);
     } else {
         accountExists(emailField,
-                      () => displayValidationErrors(["Account already exists"]),
-                      () => saveAccount(new AccountForm(emailField, firstNameField, lastNameField, passwordField),
-                                        () => displayAccountCreationError(),
-                                        () => displayAccountCreationSuccess()));
+            (snapshot) => {
+                if (snapshot.val()._password === AccountForm.hashPassword(passwordField)) {
+                    window.location.assign("./home.html");
+                } else {
+                    displayValidationErrors(["Invalid email or password"]);
+                }
+            }, () => displayValidationErrors(["Invalid email or password"]))
     }
 
     return false;
@@ -149,19 +131,9 @@ function accountExists(email, accountExistsCallback, accountDoesntExistCallback)
         if(!snapshot.exists()) {
             accountDoesntExistCallback();
         } else {
-            accountExistsCallback();
+            accountExistsCallback(snapshot);
         }
     });
-}
-
-function saveAccount(accountForm, accountCreationErrorCallback, accountCreationSuccessCallback) {
-    DB.child("accounts/" + escapeEmailAddress(accountForm.email)).set(accountForm, function (error) {
-        if(error) {
-            accountCreationErrorCallback();
-        } else {
-            accountCreationSuccessCallback();
-        }
-    })
 }
 
 function escapeEmailAddress(email) {
@@ -180,24 +152,14 @@ function displayValidationErrors(validationErrors) {
     $("#validation-errors").append(htmlError);
 }
 
-function displayAccountCreationError() {
-    displayValidationErrors(["Unable to create account"]);
-}
-
-function displayAccountCreationSuccess() {
-    $("#information").empty();
-    $("#validation-errors").empty();
-    $("#information").append("<p>Account created successfully!</p>");
-}
-
 $("#account-form").on("submit", function (e) {
-   createAccount();
-   e.preventDefault();
-   return false;
+    login();
+    e.preventDefault();
+    return false;
 });
 
 $("#submit").on("click", function (e) {
-   $("#account-form").submit();
-   e.preventDefault();
-   return false;
+    $("#account-form").submit();
+    e.preventDefault();
+    return false;
 });
