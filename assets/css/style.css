@@ -1,0 +1,33 @@
+#logopic {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+    height:150px;
+    width:165px;
+    display: block;
+}
+
+#logotitle {
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+}
+
+#accountform {
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    border: solid 1.5px;
+    padding: 7px;
+}
+
+#submit {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#home-page-buttons {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
